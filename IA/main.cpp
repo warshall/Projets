@@ -44,26 +44,26 @@ void Reflexion (std::string *Historique, std::string *Choix)
 
 }
 
-void Resultat (int Choix, int ChoixPc, int *ScorePc, int *ScoreHom)
+void Resultat (int ChoixHom, int ChoixPc, int *ScorePc, int *ScoreHom)
 {
 	std::string QuiJouQuoi[4] = {"0", "PAPIER", "PIERRE", "CISO"} ;
 
-								//PC =>		// PAPIER				PIERRE				CISO 
+								//PC =>		// PAPIER				PIERRE				CISO
 	std::string Gagnant[4][4] = 	{{"0"	,	"0"				,	"0"				,	"0"		},
-									{"0"	,	"NULL"			,	"Joueur"		,	"PC"	}, 	//PAPIER
-									{"0"	,	"PC"			,	"NUL"			,	"Joueur"},	//PIERRE	<= HOMME
-									{"0"	,	"Joueur"		,	"PC"			,	"NUL"}	} ; //CISO
+									{ "0"	,	"NULL"			,	"Joueur"		,	"PC"	}, 	//PAPIER
+									{ "0"	,	"PC"			,	"NUL"			,	"Joueur"},	//PIERRE	<= HOMME
+									{ "0"	,	"Joueur"		,	"PC"			,	"NUL"}	} ; //CISO
 
 
-	if (Gagnant[Choix][ChoixPc] == "PC") {*ScorePc += (1) ;}							 
-	if (Gagnant[Choix][ChoixPc] == "Joueur") {*ScoreHom += (1) ;}							 
-							 
-							 
+	if (Gagnant[ChoixHom][ChoixPc] == "PC") {*ScorePc += (1) ;}
+	if (Gagnant[ChoixHom][ChoixPc] == "Joueur") {*ScoreHom += (1) ;}
+
+
 	Dessin () ;
 
-	std::cout << "Joueur: " 	<<	"	"						<<	QuiJouQuoi[Choix] 			<< "		" 	<< *ScoreHom 	<< std::endl ;
+	std::cout << "Joueur: " 	<<	"	"						<<	QuiJouQuoi[ChoixHom] 			<< "		" 	<< *ScoreHom 	<< std::endl ;
 	std::cout << "PC: " 		<<	"		"					<<	QuiJouQuoi[ChoixPc] 		<< "		" 	<< *ScorePc 	<< std::endl 	<< std::endl ;
-	std::cout << "GAGNANT: " 	<<	Gagnant[Choix][ChoixPc] 	<< std::endl 	<< std::endl ;
+	std::cout << "GAGNANT: " 	<<	Gagnant[ChoixHom][ChoixPc] 	<< std::endl 	<< std::endl ;
 	std::cout << "Taper un nombre: " ;
 
 
@@ -71,24 +71,24 @@ void Resultat (int Choix, int ChoixPc, int *ScorePc, int *ScoreHom)
 
 int main ()
 {
-	std::string Historique, ChoixPc[4] = {"0", "PAPIER", "PIERRE", "CISO"}, ChoixHom[4] = {"0", "PAPIER", "PIERRE", "CISO"} ;
-	int Random, Choix, ScorePc, ScoreHom ;
+	std::string Historique, QuiJouQuoi[4] = {"0", "PAPIER", "PIERRE", "CISO"} ;
+	int ChoixPc, ChoixHom, ScorePc, ScoreHom ;
 	std::stringstream ChoixString ;			// Cette variable permet de convertir un int en string grace a ChoixString.str()
     srand (time(NULL)) ; 					// Initialisation random
 
 	ScorePc = 0 ;
 	ScoreHom = 0 ;
-	
-	Dessin (); 
+
+	Dessin ();
 	std::cout << "Taper un nombre: " ;
-	
+
 	for (;;)
 		{
 
-			std::cin >> Choix ;
+			std::cin >> ChoixHom ;
 
-	
-			if (Choix < 4)
+
+			if (ChoixHom < 4)
 				{
 					/*	if ((Choix == "1" || Choix == "2" || Choix == "3") && (Historique.length() > 4))
 							{
@@ -96,16 +96,16 @@ int main ()
 								Reflexion (&Historique, &Choix) ;
 							}
 					*/
-						if (ChoixHom[Choix] == "PIERRE" || ChoixHom[Choix] == "PAPIER" || ChoixHom[Choix] == "CISO")
+						if (QuiJouQuoi[ChoixHom] == "PIERRE" || QuiJouQuoi[ChoixHom] == "PAPIER" || QuiJouQuoi[ChoixHom] == "CISO")
 							{
-		
+
 								ChoixString.str("") ; 								// On rase
-								ChoixString << Choix ; 								// Affecte "int Choix" dans la variable
+								ChoixString << ChoixHom ; 								// Affecte "int Choix" dans la variable
 								Historique.insert(0, ChoixString.str()) ; 			// Historique du joueur en string pour rechercher les groupements
-								Random = rand() % 3 + 1 ; 							// Generateur aleatoir
+								ChoixPc = rand() % 3 + 1 ; 							// Generateur aleatoir
 								//std::cout << Historique << std::endl ;
-								Resultat (Choix, Random, &ScorePc, &ScoreHom) ;		// Fonction qui trouve le gagnant
-		
+								Resultat (ChoixHom, ChoixPc, &ScorePc, &ScoreHom) ;		// Fonction qui trouve le gagnant
+
 							}
 				}
 			else {Dessin () ; std::cout << "Veuillez faire un choix valide !" << std::endl << std::endl ; std::cout << "Taper un nombre: " ;}
