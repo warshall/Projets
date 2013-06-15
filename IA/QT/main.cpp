@@ -1,19 +1,12 @@
-#include<iostream>
-#include<string>
-#include<stdlib.h>		/* srand, rand */
-#include<time.h>		/* time */
-#include<sstream>		// Streamstring
-#include<QApplication>
-#include<QPushButton>
+#include <QApplication>
+#include "fenetre.h"
 
-int main (int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv) ;
+    QApplication app(argc, argv);
 
-    QPushButton ced("Salut les zouzous") ;
-    ced.show() ;
-    ced.setToolTip("salut") ;
+    MaFenetre fenetre ;
+    fenetre.show();
 
-
-    return app.exec() ;
+    return app.exec();
 }
